@@ -4,6 +4,7 @@ const fs = require('fs');
 const morgan = require('morgan');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const request = require('request');
+const cors = require('cors');
 const app = express();
 
 
@@ -15,15 +16,7 @@ app.use(morgan(':remote-addr :remote-user :method :url HTTP/:http-version :statu
 const static_route = process.env.STATIC_ROUTE || './public';
 app.use(express.static(static_route));
 
-// http://qr.it-wy.cn:81/pay?n=1234567890
-app.use('/pay', createProxyMiddleware({
-  target: 'http://qr.it-wy.cn:81',
-  changeOrigin: true,
-  ws: true,
-  // pathRewrite: {
-  //   '^/apis/study/business/api': '/study/business/api'
-  // }
-}))
+app.use(cors());
 
 
 // 代理微信公众号文章  https://mp.weixin.qq.com/s/buNdWcM3mMA3r-5KbsjasQ
@@ -59,9 +52,17 @@ app.use('/mp', createProxyMiddleware({
 //   // }
 // }))
 app.use('/mmbiz_png', (req, res) => {
-  console.log(new Date)
-  // request('http://mmbiz.qpic.cn/mmbiz_png/8vlVUy3zicgxcpZslcsGNEUPibSj6wEkAYMC9r6mb93fGLibxArBDc6QDU35nAmE7EaZ5JNccCKT2wBpxV683PgQA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1').pipe(res)
-  request('https://w.wallhaven.cc/full/2e/wallhaven-2eroxm.jpg').pipe(res)
+  request('http://mmbiz.qpic.cn/mmbiz_png/8vlVUy3zicgxcpZslcsGNEUPibSj6wEkAYMC9r6mb93fGLibxArBDc6QDU35nAmE7EaZ5JNccCKT2wBpxV683PgQA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1').pipe(res)
+  // request('https://w.wallhaven.cc/full/2e/wallhaven-2eroxm.jpg').pipe(res)
+  // request({
+  //   // url: 'https://w.wallhaven.cc/full/2e/wallhaven-2eroxm.jpg',
+  //   url: 'http://mmbiz.qpic.cn/mmbiz_png/8vlVUy3zicgxcpZslcsGNEUPibSj6wEkAYMC9r6mb93fGLibxArBDc6QDU35nAmE7EaZ5JNccCKT2wBpxV683PgQA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1',
+  //   headers: {
+  //     // "origin": "https://mp.weixin.qq.com",
+  //     // "referer": "https://mp.weixin.qq.com/s/buNdWcM3mMA3r-5KbsjasQ",
+  //     // "user-agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+  //   }
+  // }).pipe(res)
 })
 
 app.listen(9001, () => {
