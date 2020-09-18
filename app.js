@@ -20,9 +20,6 @@ app.use(express.static(static_route));
 // 设置跨域
 app.use(cors());
 
-// 兼容单页面 history 模式路由
-app.use(history());
-
 
 // 代理微信公众号文章  https://mp.weixin.qq.com/s/buNdWcM3mMA3r-5KbsjasQ
 app.use('/s', createProxyMiddleware({
@@ -69,6 +66,9 @@ app.use('/mmbiz_png', (req, res) => {
   //   }
   // }).pipe(res)
 })
+
+// 兼容单页面 history 模式路由
+app.use(history());
 
 app.listen(9001, () => {
   console.log('Server at 9001');
