@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const morgan = require('morgan');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const history = require('connect-history-api-fallback');
 const request = require('request');
 const cors = require('cors');
 const app = express();
@@ -16,7 +17,11 @@ app.use(morgan(':remote-addr :remote-user :method :url HTTP/:http-version :statu
 const static_route = process.env.STATIC_ROUTE || './public';
 app.use(express.static(static_route));
 
+// 设置跨域
 app.use(cors());
+
+// 兼容单页面 history 模式路由
+app.use(history());
 
 
 // 代理微信公众号文章  https://mp.weixin.qq.com/s/buNdWcM3mMA3r-5KbsjasQ

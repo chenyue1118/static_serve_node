@@ -4,6 +4,7 @@
   "description": "访问代理",
   "main": "app.js",
   "dependencies": {
+    "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.5",

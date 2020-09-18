@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["register"],{1348:function(e,n,t){"use strict";t.r(n);var r={},s=t("2877"),i=Object(s.a)(r,function(){var e=this,n=e.$createElement;return(e._self._c||n)("div",[e._v("\n  this is register page\n")])},[],!1,null,"e142caac",null);n.default=i.exports}}]);
